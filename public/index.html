@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Componentes Tailwind</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Componentes Tailwind</h1>
+        <form id="componentForm">
+            <label for="prompt">Describe el componente que deseas crear:</label>
+            <input type="text" id="prompt" name="prompt" placeholder="Ej: Crea un botón rojo" required>
+            <button type="submit">Generar Componente</button>
+        </form>
+        <pre id="output"></pre>
+    </div>
+    <script>
+        document.getElementById('componentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const prompt = document.getElementById('prompt').value;
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+            const data = await response.json();
+            document.getElementById('output').textContent = data.result;
+        });
+    </script>
+</body>
+</html>
