@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Inicializa OpenAI
 const openai = new OpenAI({
-    apiKey: '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'
+    apiKey: process.env.OPENAI_API_KEY
 });
 
 // Procesa el archivo PDF y guarda el contenido
