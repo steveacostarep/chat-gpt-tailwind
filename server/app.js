@@ -4,13 +4,20 @@ const axios = require('axios');
 const fs = require('fs');
 const pdf = require('pdf-parse');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
-
+// Use CORS middleware
+const corsOptions = {
+    origin: '*',//(https://your-client-app.com)
+    optionsSuccessStatus: 200,
+  };
+ 
+  app.use(cors(corsOptions));
 // Inicializa OpenAI
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY
