@@ -60,26 +60,20 @@ app.post('/api/generate', async (req, res) => {
         // 4. Pasar el prompt filtrado al chatbot de OpenAI para generar el componente Tailwind
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
-            temperature: 0,
+            temperature: 0.5, // Temperatura a 0 para mayor precisión
             messages: [
-                { role: "system", content: "Solo responde con el código del componente Tailwind CSS, sin ningún otro texto ni explicaciones adicionales." },
+                { role: "system", content: "Eres un experto en Tailwind CSS, utiliza la siguiente información para generar componentes Tailwind, no des respuestas adicionales, solo el código del componente Tailwind para que el usuario pueda copiar y pegar. No des instrucciones como decir aquí esta tu componente o puedes utilizar las siguientes clases. Unicamente vas a dar el código: " + finalPromptContent },
                 { role: "user", content: userPrompt }
             ],
         });
 
-        // Filtrar el código del componente para devolver solo HTML/CSS
-        const generatedCode = response.choices[0].message.content;
-        const cleanCode = generatedCode.replace(/<.*?>(.*?)<\/.*?>/gs, '').trim(); // Eliminar cualquier texto no deseado
-
-        // 5. Devolver solo el componente generado al usuario
-        res.json({ result: cleanCode });
+        // 5. Devolver el componente generado al usuario
+        res.json({ result: response.choices[0].message.content });
     } catch (error) {
         console.error('Error al generar el componente Tailwind:', error);
         res.status(500).json({ error: 'Error al generar el componente' });
     }
 });
-
-
 
 // Iniciar el servidor
 app.listen(port, () => {
