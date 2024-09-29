@@ -62,7 +62,7 @@ app.post('/api/generate', async (req, res) => {
             model: "gpt-3.5-turbo",
             temperature: 0.5, // Temperatura a 0 para mayor precisión
             messages: [
-                { role: "system", content: "Eres un experto en Tailwind CSS, utiliza la siguiente información para generar componentes Tailwind, no des respuestas adicionales, solo el código del componente Tailwind para que el usuario pueda copiar y pegar. No des instrucciones como decir aquí esta tu componente o puedes utilizar las siguientes clases. Unicamente vas a dar el código: " + finalPromptContent },
+                { role: "system", content: "Eres un experto en Tailwind CSS, utiliza la siguiente información para generar componentes Tailwind, no des respuestas adicionales, solo el código del componente Tailwind para que el usuario pueda copiar y pegar. No des instrucciones como decir aquí esta tu componente o puedes utilizar las siguientes clases. Unicamente vas a dar el código, no des la respuesta con lenguaje de markdown, no encierres la respuesta dentro de  ```html    ```: " + finalPromptContent },
                 { role: "user", content: userPrompt }
             ],
         });
